@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registration Form</title>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+<form id="registrationForm" novalidate>
+  <label for="name">Name *</label><br/>
+  <input type="text" id="name" name="name" /><br/>
+  <span id="nameError" style="color:red; display:none;">Name cannot be empty.</span><br/><br/>
+
+  <label for="email">Email *</label><br/>
+  <input type="email" id="email" name="email" /><br/>
+  <span id="emailError" style="color:red; display:none;">Please enter a valid email address.</span><br/><br/>
+
+  <label for="password">Password *</label><br/>
+  <input type="password" id="password" name="password" /><br/>
+  <span id="passwordError" style="color:red; display:none;">
+    Password must be at least 8 characters, contain one uppercase letter and one number.
+  </span><br/><br/>
+
+  <button type="submit" id="submitBtn" disabled>Submit</button>
+</form>
+
+<script>
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const submitBtn = document.getElementById('submitBtn');
+
+  const nameError = document.getElementById('nameError');
+  const emailError = document.getElementById('emailError');
+  const passwordError = document.getElementById('passwordError');
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+  function validateName() {
+    const value = nameInput.value.trim();
+    if (value === '') {
+      nameError.style.display = 'inline';
+      return false;
+    } else {
+      nameError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateEmail() {
+    const value = emailInput.value.trim();
+    if (!emailRegex.test(value)) {
+      emailError.style.display = 'inline';
+      return false;
+    } else {
+      emailError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validatePassword() {
+    const value = passwordInput.value;
+    if (!passwordRegex.test(value)) {
+      passwordError.style.display = 'inline';
+      return false;
+    } else {
+      passwordError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function updateSubmitButton() {
+    if (validateName() && validateEmail() && validatePassword()) {
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.disabled = true;
+    }
+  }
+
+  
+  nameInput.addEventListener('blur', () => {
+    validateName();
+    updateSubmitButton();
+  });
+
+  emailInput.addEventListener('blur', () => {
+    validateEmail();
+    updateSubmitButton();
+  });
+
+  passwordInput.addEventListener('blur', () => {
+    validatePassword();
+    updateSubmitButton();
+  });
+
+  
+  nameInput.addEventListener('input', updateSubmitButton);
+  emailInput.addEventListener('input', updateSubmitButton);
+  passwordInput.addEventListener('input', updateSubmitButton);
+
+
+  document.getElementById('registrationForm').addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Form submitted successfully!');
+  });
+</script>
+
+</body>
+</html>

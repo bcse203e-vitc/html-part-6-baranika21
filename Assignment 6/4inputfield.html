@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dynamic Hobbies Form</title>
+</head>
+<body>
+
+  <form id="hobbiesForm">
+    <label>Hobbies:</label><br />
+    <div id="hobbiesContainer">
+      <div class="hobby-field">
+        <input type="text" name="hobby" placeholder="Enter hobby" />
+        <span class="validation-msg"></span>
+      </div>
+    </div>
+    <button type="button" id="addHobbyBtn">Add Hobby</button>
+  </form>
+
+  <script>
+    const hobbiesContainer = document.getElementById('hobbiesContainer');
+    const addHobbyBtn = document.getElementById('addHobbyBtn');
+    const hobbyRegex = /^[A-Za-z\s]+$/;
+
+    // Function to validate a hobby input field
+    function validateHobby(input, msgElem) {
+      const value = input.value.trim();
+      if (value === '') {
+        msgElem.textContent = '';
+        return;
+      }
+      if (hobbyRegex.test(value)) {
+        msgElem.textContent = 'Valid hobby';
+      } else {
+        msgElem.textContent = 'Invalid hobby: Only letters and spaces allowed';
+      }
+    }
+
+    // Event delegation for validation on input
+    hobbiesContainer.addEventListener('input', (e) => {
+      if (e.target && e.target.name === 'hobby') {
+        const msgElem = e.target.nextElementSibling;
+        validateHobby(e.target, msgElem);
+      }
+    });
+
+   
+    addHobbyBtn.addEventListener('click', () => {
+      const newField = document.createElement('div');
+      newField.classList.add('hobby-field');
+      newField.innerHTML = `
+        <input type="text" name="hobby" placeholder="Enter hobby" />
+        <span class="validation-msg"></span>
+      `;
+      hobbiesContainer.appendChild(newField);
+    });
+  </script>
+
+</body>
+</html>

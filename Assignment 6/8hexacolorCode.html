@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hex Color Validation with Live Preview</title>
+</head>
+<body>
+  <h3>Hex Color Code</h3>
+
+  <label for="hex">Enter color (#FFF or #FFFFFF): </label>
+  <input id="hex" type="text" placeholder="#FFFFFF" />
+  <div id="preview" style="display:inline-block;width:40px;height:24px;border:1px solid #ccc;vertical-align:middle;margin-left:8px;"></div>
+  <span id="msg" aria-live="polite" style="margin-left:8px;"></span>
+
+  <script>
+    const input = document.getElementById('hex');
+    const preview = document.getElementById('preview');
+    const msg = document.getElementById('msg');
+    const regex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
+    function updatePreview() {
+      const val = input.value.trim();
+      if (regex.test(val)) {
+        preview.style.background = val;
+        preview.style.borderColor = '#ccc';
+        msg.textContent = 'Valid hex';
+      } else {
+        preview.style.background = 'transparent';
+        preview.style.borderColor = '#f00';
+        msg.textContent = val === '' ? '' : 'Invalid hex';
+      }
+    }
+
+    // Live update as the user types
+    input.addEventListener('input', updatePreview);
+
+    // Initialize (in case of prefilled value)
+    updatePreview();
+  </script>
+</body>
+</html>

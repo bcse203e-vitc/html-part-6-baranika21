@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cascading Dropdown: Continent → Country</title>
+</head>
+<body>
+  <h2>Select Continent and Country</h2>
+
+  <label for="continent">Continent:</label>
+  <select id="continent">
+    <option value="">-- Select Continent --</option>
+    <option value="asia">Asia</option>
+    <option value="europe">Europe</option>
+    <option value="africa">Africa</option>
+    <option value="northAmerica">North America</option>
+    <option value="southAmerica">South America</option>
+    <option value="australia">Australia</option>
+  </select>
+
+  <br><br>
+
+  <label for="country">Country:</label>
+  <select id="country">
+    <option value="">-- Select Country --</option>
+  </select>
+
+  <script>
+    const data = {
+      asia: ["India", "China", "Japan", "Thailand"],
+      europe: ["France", "Germany", "Italy", "Spain"],
+      africa: ["Nigeria", "Egypt", "South Africa", "Kenya"],
+      northAmerica: ["USA", "Canada", "Mexico"],
+      southAmerica: ["Brazil", "Argentina", "Chile"],
+      australia: ["Australia", "New Zealand"]
+    };
+
+    const continentSelect = document.getElementById("continent");
+    const countrySelect = document.getElementById("country");
+
+    continentSelect.addEventListener("change", function() {
+      const continent = this.value;
+      countrySelect.innerHTML = "<option value=''>-- Select Country --</option>"; // reset
+      
+      if (continent && data[continent]) {
+        data[continent].forEach(country => {
+          const option = document.createElement("option");
+          option.value = country;
+          option.textContent = country;
+          countrySelect.appendChild(option);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
